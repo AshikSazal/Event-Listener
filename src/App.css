@@ -1,0 +1,15 @@
+.label-text{
+    @apply block text-blue-600/100 font-bold text-xl;
+}
+
+.input-text{
+    @apply w-full rounded-md p-2 border border-gray-300;
+}
+
+.button-submit {
+  @apply mt-5 bg-blue-500 text-white px-4 py-2 rounded-md transition duration-700 ease-in-out transform hover:scale-125;
+}
+
+.center-text{
+    @apply flex h-screen flex-col items-center justify-center;
+}

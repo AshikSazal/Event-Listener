@@ -13,12 +13,12 @@ class PostController extends Controller
             'title'=>'required',
             'content'=>'required'
         ]);
-        $post_data['user_id']=auth()->user()->id;
+        $post_data['user_id']=1;
         Post::create($post_data);
 
-        $data = ['title'=>$post_data['title'], 'author'=>auth()->user()->name];
+        $data = ['title'=>$post_data['title'], 'author'=>'RAHUL'];
         event(new PostCreated($data));
-        
+
         return ['success'=>'Post Created'];
     }
 }

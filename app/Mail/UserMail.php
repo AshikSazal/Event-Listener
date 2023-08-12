@@ -30,6 +30,6 @@ class UserMail extends Mailable implements ShouldQueue
     public function build()
     {
         return ['post'=>$this->post];
-        // return $this->view('view.user',['post'=>$this->post]);
+        // return $this->view('view.users',['post'=>$this->post]);
     }
 }

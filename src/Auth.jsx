@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,34 +16,44 @@ const Auth = () => {
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
-    if(isLoggedIn){
-      const response = await fetch('http://127.0.0.1:8000/register',
-        {
-          method:'POST',
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password
-          })
+    try{
+      if(isLoggedIn){
+        const response = await fetch('http://127.0.0.1:8000/api/login',
+          {
+            method:'POST',
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password
+            })
+          }
+        );
+        const responseData = await response.json();
+        console.log(responseData);
+      }else{
+        const response = await fetch('http://127.0.0.1:8000/api/register',
+          {
+            method:'POST',
+            headers:{
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              password: formData.password
+            })
+          }
+        );
+        if (!response.ok) {
+          throw new Error('Registration request failed');
         }
-      );
-      const responseData = response.json();
-      console.log(responseData);
-    }else{
-      const response = await fetch('http://127.0.0.1:8000/register',
-        {
-          method:'POST',
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            password: formData.password
-          })
-        }
-      );
-      const responseData = response.json();
-      console.log(responseData);
+        const responseData = await response.json();
+        console.log('Registration response:', responseData);
+      }
+      navigate('/dashboard', { replace: true})
+    }catch(err){
+      console.log(err)
     }
     // It will replace the auth url
-    navigate('/dashboard', { replace: true})
 
   }
 
@@ -64,7 +74,7 @@ const Auth = () => {
           </h1>
         </div>
         <form action="" className="space-y-4" onSubmit={handleSubmit}>
-          {isLoggedIn && 
+          {!isLoggedIn && 
           <div>
           <input type="text" name="name" className="input-text" placeholder="Name" onChange={onChangeHandler} value={formData.name}/>
         </div>}
@@ -92,7 +102,7 @@ const Auth = () => {
           </div>
         </form>
         <p className="text-gray-600 mt-4">
-           {isLoggedIn ? 'Already' : 'Don\'t'} have an account? <button className="text-blue-500 hover:text-blue-600 hover:underline" onClick={authHandler}>Click here to {isLoggedIn ? 'Log in' : 'Sign up'}</button>
+           {!isLoggedIn ? 'Already' : 'Don\'t'} have an account? <button className="text-blue-500 hover:text-blue-600 hover:underline" onClick={authHandler}>Click here to {!isLoggedIn ? 'Log in' : 'Sign up'}</button>
          </p>
       </div>
     </div>

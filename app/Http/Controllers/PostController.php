@@ -16,7 +16,7 @@ class PostController extends Controller
         $post_data['user_id']=1;
         Post::create($post_data);
 
-        $data = ['title'=>$post_data['title'], 'author'=>'RAHUL'];
+        $data = ['title'=>$post_data['title'],'content'=>$post_data['content'], 'author'=>'RAHUL'];
         event(new PostCreated($data));
 
         if ($request->is('api/*')) {

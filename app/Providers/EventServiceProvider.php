@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\PostCreated::class=>[
             \App\Listeners\NotifyUser::class,
-            \App\Listeners\NotifyAdmin::class
+            \App\Listeners\NotifyAdmin::class,
         ]
     ];
 

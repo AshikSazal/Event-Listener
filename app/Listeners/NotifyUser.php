@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\PostCreated;
-use App\Models\User;
-use App\Mail\UserMail;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserMail;
 
 class NotifyUser
 {
@@ -27,7 +26,7 @@ class NotifyUser
      * @param  object  $event
      * @return void
      */
-    public function handle(PostCreated $event)
+    public function handle($event)
     {
         $users = User::get();
         foreach($users as $user){

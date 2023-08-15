@@ -14,7 +14,6 @@ class PostCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $post;
-
     /**
      * Create a new event instance.
      *
@@ -22,7 +21,7 @@ class PostCreated
      */
     public function __construct($post)
     {
-        $this->post=$post;
+        $this->post = $post;
     }
 
     /**

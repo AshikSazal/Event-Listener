@@ -5,13 +5,14 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class UserMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $post;
-
     /**
      * Create a new message instance.
      *
@@ -19,17 +20,41 @@ class UserMail extends Mailable implements ShouldQueue
      */
     public function __construct($post)
     {
-        $this->post=$post;
+        $this->post = $post;
     }
 
     /**
-     * Build the message.
+     * Get the message envelope.
      *
-     * @return $this
+     * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function build()
+    public function envelope()
     {
-        return ['post'=>$this->post];
-        // return $this->view('view.users',['post'=>$this->post]);
+        return new Envelope(
+            subject: 'User Mail',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     *
+     * @return \Illuminate\Mail\Mailables\Content
+     */
+    public function content()
+    {
+        return new Content(
+            view: 'welcome',
+            with:["post"=>$this->post]
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array
+     */
+    public function attachments()
+    {
+        return [];
     }
 }

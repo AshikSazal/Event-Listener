@@ -19,6 +19,10 @@ class PostController extends Controller
         $data = ['title'=>$post_data['title'], 'author'=>'RAHUL'];
         event(new PostCreated($data));
 
-        return ['success'=>'Post Created'];
+        if ($request->is('api/*')) {
+            return response()->json(['message' => 'Post created', 'post' => $data]);
+        } else {
+            return redirect()->back()->withSuccess('Post created');
+        }
     }
 }
